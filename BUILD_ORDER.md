@@ -40,13 +40,14 @@ Build a minimal end-to-end system first, then enhance incrementally. This approa
 ---
 
 ### 2. **Step 2: LLM-to-Cypher Script (No UI)** 🔹
-**Priority: CRITICAL - Core Logic**
+**Priority: CRITICAL - Core Logic** ✅ **DONE**
 
-- [ ] Write a Node script that:
-  - [ ] Loads a system prompt from `prompts/system.txt` with schema and examples
-  - [ ] Calls Ollama (`http://localhost:11434/api/generate`)
-  - [ ] Parses returned `{ "cypher": "MATCH ... RETURN ..." }`
-  - [ ] Validates with JSON schema or Zod
+- [x] Write a Node script that:
+  - [x] Loads a system prompt from `prompts/system.txt` with schema and examples
+  - [x] Calls Ollama (`http://localhost:11434/api/generate`)
+  - [x] Parses returned `{ "cypher": "MATCH ... RETURN ..." }`
+  - [x] Validates with JSON schema or Zod
+- [x] **Status: COMPLETED** - See `STEP_2_COMPLETE.md` for details
 
 **Why Second:** Prove the core translation logic works independently before adding API layers.
 
