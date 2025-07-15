@@ -29,11 +29,11 @@ Build a minimal end-to-end system first, then enhance incrementally. This approa
 ### 1. **Step 1: Graph Schema Setup** 🔹
 **Priority: CRITICAL - Build First**
 
-- [ ] Define node labels, relationships, and properties for your domain
-- [ ] Create a read-only database role in Neo4j
-- [ ] Export schema summary to JSON or text
-- [ ] Seed Neo4j with test data (10–50 nodes)
-- [ ] *Use MCP tools to validate schema if configured*
+- [x] Define node labels, relationships, and properties for your domain
+- [x] Create a read-only database role in Neo4j
+- [x] Export schema summary to JSON or text
+- [x] Seed Neo4j with test data (10–50 nodes)
+- [x] *Use MCP tools to validate schema if configured*
 
 **Why First:** Having real graph data makes all subsequent testing meaningful and concrete.
 
