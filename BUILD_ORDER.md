@@ -10,6 +10,19 @@ Build a minimal end-to-end system first, then enhance incrementally. This approa
 
 ---
 
+## 📋 Phase 0: MCP Integration Setup (Optional but Recommended)
+
+### 0. **Neo4j MCP Server Setup** 🔹
+**Priority: HIGH - Accelerates Development**
+
+- [ ] Configure Claude Desktop with Neo4j MCP server (see `NEO4J_MCP_SETUP.md`)
+- [ ] Test MCP connection with `get-neo4j-schema` tool
+- [ ] Verify read/write Cypher query capabilities
+
+**Why Early:** Provides direct database access in Claude Desktop for schema exploration and query testing.
+
+---
+
 ## 📋 Phase 1: Foundation (Core Data & Logic)
 
 ### 1. **Step 1: Graph Schema Setup** 🔹
@@ -19,6 +32,7 @@ Build a minimal end-to-end system first, then enhance incrementally. This approa
 - [ ] Create a read-only database role in Neo4j
 - [ ] Export schema summary to JSON or text
 - [ ] Seed Neo4j with test data (10–50 nodes)
+- [ ] *Use MCP tools to validate schema if configured*
 
 **Why First:** Having real graph data makes all subsequent testing meaningful and concrete.
 
@@ -128,6 +142,7 @@ Build a minimal end-to-end system first, then enhance incrementally. This approa
 
 | Phase | Milestone | Expected Time | Success Criteria |
 |-------|-----------|---------------|------------------|
+| 0 | MCP Setup Complete | 0.5 day | Claude can query Neo4j directly via MCP tools |
 | 1 | Foundation Complete | 1 day | Can manually test NL→Cypher→Results |
 | 2 | API & UI Complete | 1 day | End-to-end web application working |
 | 3 | Security Added | 0.5 day | All queries sanitized and logged |
@@ -158,6 +173,7 @@ Build a minimal end-to-end system first, then enhance incrementally. This approa
 
 ## 🎯 Success Metrics
 
+- **Phase 0 Success:** Claude Desktop can directly query your Neo4j database
 - **Phase 1 Success:** Can ask "Show me all users" and get valid Cypher
 - **Phase 2 Success:** Can use the web app end-to-end
 - **Phase 3 Success:** Malicious queries are blocked
