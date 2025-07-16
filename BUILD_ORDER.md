@@ -1,6 +1,16 @@
 # Recommended Build Order: LLM-powered Neo4j Query App
 
-This document outlines the logical order for building the LLM-powered Natural Language to Neo4j Query application based on the project goals.
+T### 3. **Step 3: Express Service Layer** 🔹
+**Priority: HIGH - Backend API** ✅ **DONE**
+
+- [x] Create `POST /ask` endpoint
+  - [x] Accepts `{ query: string }`
+  - [x] Calls Ollama with prompt + NL query
+  - [x] Validates response → extracts Cypher
+  - [x] Uses `neo4j-driver` to run Cypher
+  - [x] Returns results as JSON array
+
+**Why Third:** Creates a stable contract between frontend and backend systems.t outlines the logical order for building the LLM-powered Natural Language to Neo4j Query application based on the project goals.
 
 ---
 
