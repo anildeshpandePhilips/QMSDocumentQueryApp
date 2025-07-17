@@ -66,16 +66,17 @@ Build a minimal end-to-end system first, then enhance incrementally. This approa
 ## 📋 Phase 2: API & Interface (Service Layer)
 
 ### 3. **Step 3: Express Service Layer** 🔹
-**Priority: HIGH - Backend Foundation**
+**Priority: HIGH - Backend Foundation** ✅ **COMPLETE**
 
-- [ ] Create `POST /ask` endpoint
-  - [ ] Accepts `{ query: string }`
-  - [ ] Calls Ollama with prompt + NL query
-  - [ ] Validates response → extracts Cypher
-  - [ ] Uses `neo4j-driver` to run Cypher
-  - [ ] Returns results as JSON array
+- [x] Create `POST /ask` endpoint
+  - [x] Accepts `{ query: string }`
+  - [x] Calls Ollama with prompt + NL query
+  - [x] Validates response → extracts Cypher
+  - [x] Uses `neo4j-driver` to run Cypher
+  - [x] Returns results as JSON array
 
-**Why Third:** Creates a stable contract between frontend and backend systems.
+**Why Third:** Creates a stable contract between frontend and backend systems.  
+**Status:** ✅ **COMPLETED** - See `STEP_3_COMPLETE.md` for details
 
 ---
 
