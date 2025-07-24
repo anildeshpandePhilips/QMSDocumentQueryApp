@@ -8,7 +8,11 @@
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
     "test": "node src/test-llm-cypher.js",
-    "llm": "node src/llm-to-cypher.js"
+    "test:api": "node src/test-api.js",
+    "test:e2e": "node test-e2e.js",
+    "llm": "node src/llm-to-cypher.js",
+    "client": "cd client && npm run dev",
+    "client:build": "cd client && npm run build"
   },
   "keywords": [
     "neo4j",
