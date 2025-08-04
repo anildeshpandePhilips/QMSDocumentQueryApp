@@ -5,7 +5,7 @@
  * Tests various natural language queries
  */
 
-import { LLMToCypherConverter } from './index.js';
+import { LLMToCypherConverter } from './llm-to-cypher.js';
 
 const TEST_QUERIES = [
   "Show me all training plans",
