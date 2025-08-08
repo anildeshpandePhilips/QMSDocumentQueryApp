@@ -42,6 +42,12 @@ MCP_PORT=7400
 MCP_ALLOWED_ORIGINS=http://localhost:5173
 ```
 
+**Documentation Organization**
+- All MCP-related documentation goes in `docs/features/mcp/` folder
+- Phase completion documents: `PHASE_X_COMPLETE.md` in the mcp folder
+- Implementation instructions remain in `mcp_implementation_instructions.md`
+- Preserve existing `docs/` structure for non-MCP documentation
+
 ---
 
 ## Phase 1 — Add MCP Dependencies to Existing Package
