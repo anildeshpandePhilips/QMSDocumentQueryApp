@@ -3,15 +3,31 @@ import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/
 
 let mcpClient: Client | null = null;
 
-export async function getMcpClient(): Promise<Client> {
-  if (!mcpClient) {
-    mcpClient = new Client({ name: "qms-react-ui", version: "1.0.0" });
-    const transport = new StreamableHTTPClientTransport(
-      new URL("http://localhost:7400/mcp")
-    );
+export async function getMcpClient() {
+  if (mcpClient) return mcpClient;
+  
+  mcpClient = new Client(
+    {
+      name: "QMS-Client",
+      version: "1.0.0",
+    },
+    {
+      capabilities: {},
+    }
+  );
+
+  const transport = new StreamableHTTPClientTransport(
+    new URL("http://localhost:7400/mcp")
+  );
+
+  try {
     await mcpClient.connect(transport);
+    console.log("✅ MCP client connected successfully");
+    return mcpClient;
+  } catch (error) {
+    console.error("❌ MCP connection failed:", error);
+    throw error;
   }
-  return mcpClient;
 }
 
 export async function queryViaMcp(naturalLanguage: string) {
@@ -21,8 +37,7 @@ export async function queryViaMcp(naturalLanguage: string) {
   const llmResult = await client.callTool({
     name: "ollama.generate",
     arguments: { 
-      prompt: naturalLanguage,
-      model: "llama3.2:latest"
+      query: naturalLanguage
     }
   });
   

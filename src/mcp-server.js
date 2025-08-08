@@ -202,7 +202,9 @@ const allowedOrigins = (process.env.MCP_ALLOWED_ORIGINS || "http://localhost:517
 app.use(cors({ 
   origin: allowedOrigins, 
   credentials: true,
-  allowedHeaders: ["Content-Type", "mcp-session-id"] 
+  allowedHeaders: ["Content-Type", "Accept", "mcp-session-id", "Authorization"],
+  exposedHeaders: ["mcp-session-id"],
+  methods: ["GET", "POST", "OPTIONS"]
 }));
 
 // Health check endpoint
@@ -235,27 +237,24 @@ app.all("/mcp", async (req, res) => {
   let transport = transports.get(sessionId);
   
   if (!transport) {
-    transport = new StreamableHTTPServerTransport(res);
+    transport = new StreamableHTTPServerTransport({
+      sessionId,
+      enableDnsRebindingProtection: false  // Disable for development - allows localhost:7400
+    });
     transports.set(sessionId, transport);
     console.log(`🔗 New MCP transport created for session: ${sessionId}`);
     
-    // Clean up transport when session ends
-    transport.onclose = () => {
-      transports.delete(sessionId);
-      console.log(`🧹 MCP session cleaned up: ${sessionId}`);
-    };
-    
-    // Connect the server to this transport (access underlying server)
-    await server.server.connect(transport);
+    // Connect the server to this transport
+    await server.connect(transport);
   }
 
-  // Handle the MCP request
+  // Handle the MCP request properly
   try {
-    await transport.handleRequest(req);
+    await transport.handleRequest(req, res, req.body);
   } catch (error) {
     console.error('❌ MCP request handling error:', error.message);
     if (!res.headersSent) {
-      res.status(500).json({ error: 'MCP request handling failed' });
+      res.status(500).json({ error: 'MCP request handling failed', details: error.message });
     }
   }
 });
