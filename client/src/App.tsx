@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import './App.css'
+import { queryViaMcp } from './mcp'
 
 interface QueryResult {
   success: boolean
   query: string
   cypher: string
-  data: any[]
+  data: Record<string, unknown>[]
   count: number
   executionTime: number
   timestamp: string
@@ -18,6 +19,7 @@ function App() {
   const [results, setResults] = useState<QueryResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [queryMethod, setQueryMethod] = useState<'rest' | 'mcp'>('rest')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -32,27 +34,61 @@ function App() {
     setResults(null)
 
     try {
-      const response = await fetch('http://localhost:3001/ask', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ query: query.trim() }),
-      })
-
-      const data = await response.json()
+      let data: QueryResult;
       
-      if (response.ok && data.success) {
-        setResults(data)
+      if (queryMethod === 'mcp') {
+        // Use MCP path
+        console.log('🔗 Querying via MCP...');
+        data = await queryViaMcp(query.trim());
       } else {
-        setError(data.error || data.message || 'An error occurred')
+        // Use existing REST API path
+        console.log('🌐 Querying via REST API...');
+        const response = await fetch('http://localhost:3001/ask', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ query: query.trim() }),
+        })
+
+        data = await response.json()
+        
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || data.message || 'An error occurred')
+        }
       }
-    } catch (err) {
-      setError('Failed to connect to server. Make sure the API is running on port 3001.')
+      
+      setResults(data)
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to execute query')
     } finally {
       setLoading(false)
     }
   }
+
+  // Add query method toggle in your form
+  const renderQueryMethodToggle = () => (
+    <div className="query-method-toggle">
+      <label>
+        <input
+          type="radio"
+          value="rest"
+          checked={queryMethod === 'rest'}
+          onChange={(e) => setQueryMethod(e.target.value as 'rest' | 'mcp')}
+        />
+        REST API
+      </label>
+      <label>
+        <input
+          type="radio"
+          value="mcp"
+          checked={queryMethod === 'mcp'}
+          onChange={(e) => setQueryMethod(e.target.value as 'rest' | 'mcp')}
+        />
+        MCP
+      </label>
+    </div>
+  )
 
   const renderResults = () => {
     if (!results || !results.data || results.data.length === 0) {
@@ -131,6 +167,8 @@ function App() {
             />
           </div>
           
+          {renderQueryMethodToggle()}
+          
           <button type="submit" disabled={loading || !query.trim()}>
             {loading ? (
               <>
@@ -153,7 +191,7 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>Powered by Ollama LLM → Neo4j Graph Database</p>
+        <p>Powered by Ollama LLM → Neo4j Graph Database | Query via {queryMethod.toUpperCase()}</p>
       </footer>
     </div>
   )

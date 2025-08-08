@@ -83,6 +83,34 @@
   cursor: not-allowed;
 }
 
+.query-method-toggle {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f7fafc;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+}
+
+.query-method-toggle label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 1.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: #4a5568;
+  transition: color 0.3s ease;
+}
+
+.query-method-toggle label:hover {
+  color: #2d3748;
+}
+
+.query-method-toggle input[type="radio"] {
+  margin-right: 0.5rem;
+  accent-color: #667eea;
+  transform: scale(1.2);
+}
+
 button {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
