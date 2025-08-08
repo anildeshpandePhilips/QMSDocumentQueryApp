@@ -12,6 +12,7 @@
     "test": "node src/test-llm-cypher.js",
     "test:api": "node src/test-api.js",
     "test:mcp": "node test-mcp.js",
+    "test:mcp-client": "node test-mcp-client.js",
     "test:e2e": "node test-e2e.js",
     "llm": "node src/llm-to-cypher.js",
     "dev:all": "concurrently \"npm run dev\" \"npm run mcp\" \"npm run client\"",
